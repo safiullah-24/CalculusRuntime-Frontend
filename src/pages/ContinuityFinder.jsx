@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import * as math from 'mathjs';
-import { latexToMathJs } from '../utils/Latex Convertor/LatexToMathJs';
+import { latexToMathJs } from 'crosstex';
 
 const ContinuityFinder = () => {
     const [variables, setVariables] = useState([{ name: 'x', value: '0' }, { name: 'y', value: '0' }]);
