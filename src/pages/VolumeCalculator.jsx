@@ -397,7 +397,7 @@ export default function DoubleIntegralSolver() {
     const [order, setOrder] = useState('dydx');
     const [result, setResult] = useState(null);
     const [error, setError] = useState('');
-    const [showSteps, setShowSteps] = useState(true);
+    const [showSteps] = useState(true);
     const [activeCat, setActiveCat] = useState(0);
     const [computing, setComputing] = useState(false);
 

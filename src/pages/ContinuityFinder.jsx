@@ -265,7 +265,7 @@ const ContinuityFinder = () => {
             console.error('ERROR:', error);
             showToastMessage('Error: ' + error.message);
         }
-    }, [variables, analysisType]);
+    }, [variables, analysisType, checkContinuityAtPoint, generateConclusion]);
 
     // Analyze the domain of the function
     const analyzeDomain = (latex, expr, vars) => {
