@@ -1,4 +1,6 @@
 import { useEffect, useRef } from "react";
+import renderMathInElement from "katex/contrib/auto-render";
+import "katex/dist/katex.min.css";
 
 const integrationStyles = `
 .study-guide-page {
@@ -26,37 +28,18 @@ const integrationStyles = `
 }
 `;
 
-function loadMathJax() {
-  if (window.MathJax?.typesetPromise) {
-    return Promise.resolve(window.MathJax);
-  }
-
-  if (window.__calculusMathJaxPromise) {
-    return window.__calculusMathJaxPromise;
-  }
-
-  window.MathJax = {
-    tex: {
-      inlineMath: [['\\(', '\\)'], ['$', '$']],
-      displayMath: [['\\[', '\\]'], ['$$', '$$']],
-      tags: 'ams',
-      packages: { '[+]': ['ams'] },
-    },
-    options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-    },
-  };
-
-  window.__calculusMathJaxPromise = new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js";
-    script.async = true;
-    script.onload = () => resolve(window.MathJax);
-    script.onerror = reject;
-    document.head.appendChild(script);
+function renderLatex(root) {
+  renderMathInElement(root, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false },
+    ],
+    throwOnError: false,
+    strict: false,
+    ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"],
   });
-
-  return window.__calculusMathJaxPromise;
 }
 
 function setupMcqs(root) {
@@ -136,8 +119,8 @@ function setupMcqs(root) {
       }
 
       updateScoreDisplay(section);
-      if (window.MathJax?.typesetPromise && answerPanel) {
-        window.MathJax.typesetPromise([answerPanel]).catch(() => {});
+      if (answerPanel) {
+        renderLatex(answerPanel);
       }
     };
 
@@ -187,15 +170,10 @@ function StudyGuideShell({ guideClass, styles, markup }) {
     topButton?.addEventListener("click", scrollTop);
     cleanups.push(() => topButton?.removeEventListener("click", scrollTop));
 
-    loadMathJax()
-      .then((mathJax) => mathJax.typesetPromise?.([root]))
-      .catch(() => {});
+    renderLatex(root);
 
     return () => {
       cleanups.forEach((cleanup) => cleanup());
-      if (window.MathJax?.typesetClear) {
-        window.MathJax.typesetClear([root]);
-      }
     };
   }, [markup]);
 
