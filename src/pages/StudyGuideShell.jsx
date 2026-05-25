@@ -8,22 +8,233 @@ const integrationStyles = `
 }
 
 .partial-derivatives-guide .sidebar {
+  align-items: center;
+  background: #0f0e0d;
+  border-bottom: 1px solid rgba(200, 146, 42, 0.3);
+  border-right: 0;
+  display: flex;
+  gap: 0;
+  height: auto;
+  inset: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 2rem;
+  position: sticky;
+  scrollbar-width: thin;
   top: 64px;
-  height: calc(100vh - 64px);
+  width: 100%;
+  z-index: 120;
 }
 
 .vector-calculus-guide nav {
   top: 64px;
 }
 
-.partial-derivatives-guide .main,
 .vector-calculus-guide > div > main {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) inset;
 }
 
+.partial-derivatives-guide .sb-brand {
+  border-bottom: 0;
+  border-right: 1px solid rgba(200, 146, 42, 0.3);
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+  padding: 0.65rem 1.1rem 0.65rem 0;
+}
+
+.partial-derivatives-guide .sb-sub {
+  display: none;
+}
+
+.partial-derivatives-guide .sb-title {
+  color: #e8b84b;
+  font-size: 0.9rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.partial-derivatives-guide .sb-group {
+  display: none;
+}
+
+.partial-derivatives-guide .sb-link {
+  border-bottom: 2px solid transparent;
+  border-left: 0;
+  color: rgba(250, 247, 242, 0.76);
+  flex: 0 0 auto;
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 0.8rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.partial-derivatives-guide .sb-link:hover,
+.partial-derivatives-guide .sb-link.active {
+  background: transparent;
+  border-bottom-color: #c8922a;
+  border-left-color: transparent;
+  color: #e8b84b;
+}
+
+.partial-derivatives-guide .sb-link .sn {
+  color: #c8922a;
+  font-size: 0.68rem;
+}
+
+.partial-derivatives-guide .main {
+  margin-left: 0;
+  max-width: none;
+  padding: 0;
+}
+
+.partial-derivatives-guide .ch-hdr {
+  background:
+    linear-gradient(135deg, rgba(15, 14, 13, 0.97), rgba(39, 53, 64, 0.97)),
+    repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(200, 146, 42, 0.06) 40px, rgba(200, 146, 42, 0.06) 41px);
+  border-bottom: 0;
+  color: #faf7f2;
+  margin-bottom: 0;
+  overflow: hidden;
+  padding: 3.4rem 2rem 3rem;
+  position: relative;
+}
+
+.partial-derivatives-guide .ch-hdr::after {
+  background: linear-gradient(90deg, transparent, #c8922a, #2a5c45, transparent);
+  content: "";
+  height: 1px;
+  inset: auto 0 0;
+  opacity: 0.8;
+  position: absolute;
+}
+
+.partial-derivatives-guide .ch-eye {
+  color: #e8b84b;
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+}
+
+.partial-derivatives-guide .ch-title {
+  color: #faf7f2;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.partial-derivatives-guide .ch-sub {
+  color: rgba(250, 247, 242, 0.74);
+}
+
+.partial-derivatives-guide .ch-orn {
+  color: #e8b84b;
+}
+
+.partial-derivatives-guide .main > p,
+.partial-derivatives-guide .main > .toc,
+.partial-derivatives-guide .main > .section,
+.partial-derivatives-guide .main > .mcq-section,
+.partial-derivatives-guide .main > .pg-foot {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+}
+
+.partial-derivatives-guide .main > p {
+  padding: 3rem 2rem 0;
+}
+
+.partial-derivatives-guide .main > .toc {
+  background: #ffffff;
+  border: 1px solid #d6cfc4;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  margin-bottom: 3.5rem;
+  margin-top: 2rem;
+}
+
+.partial-derivatives-guide .toc-h {
+  color: #3d4f6b;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+}
+
+.partial-derivatives-guide .toc-a {
+  color: #3d4f6b;
+}
+
+.partial-derivatives-guide .main > .divider {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+}
+
+.partial-derivatives-guide .section,
+.partial-derivatives-guide .mcq-section {
+  background: transparent;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.partial-derivatives-guide .sec-badge,
+.partial-derivatives-guide .mcq-section-badge {
+  color: #c8922a;
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+}
+
+.partial-derivatives-guide .sec-title,
+.partial-derivatives-guide .mcq-section-title {
+  color: #3d4f6b;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.partial-derivatives-guide .box,
+.partial-derivatives-guide .mcq-card,
+.partial-derivatives-guide .sum-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.partial-derivatives-guide .fml {
+  background: #f7f4ff;
+  border-left: 4px solid #3d4f6b;
+  border-radius: 0 6px 6px 0;
+}
+
+.partial-derivatives-guide .pg-foot {
+  color: #7a7268;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 @media (max-width: 920px) {
+  .partial-derivatives-guide .sidebar {
+    top: 0;
+  }
+
   .vector-calculus-guide nav {
     top: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .partial-derivatives-guide .sidebar {
+    padding: 0 1rem;
+  }
+
+  .partial-derivatives-guide .sb-brand {
+    display: none;
+  }
+
+  .partial-derivatives-guide .ch-hdr {
+    padding: 2.4rem 1rem 2.2rem;
+  }
+
+  .partial-derivatives-guide .main > p,
+  .partial-derivatives-guide .section,
+  .partial-derivatives-guide .mcq-section,
+  .partial-derivatives-guide .pg-foot {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 `;
