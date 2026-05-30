@@ -55,8 +55,26 @@ const convertFractions = (latex) => {
     return out;
 };
 
+const convertSqrt = (latex) => {
+    const marker = '\\sqrt';
+    let out = '';
+    for (let i = 0; i < latex.length;) {
+        if (latex.startsWith(marker, i)) {
+            const radicand = unwrapSingleGroup(latex.slice(i + marker.length));
+            if (radicand) {
+                out += `sqrt(${convertSqrt(radicand.body)})`;
+                i += marker.length + radicand.body.length + 2;
+                continue;
+            }
+        }
+        out += latex[i];
+        i++;
+    }
+    return out;
+};
+
 const latexToSolverExpression = (latex) => {
-    let expr = convertFractions(latex)
+    let expr = convertSqrt(convertFractions(latex))
         .replace(/\\left|\\right/g, '')
         .replace(/\\cdot|\\times/g, '*')
         .replace(/\\pi/g, 'pi')
@@ -70,6 +88,7 @@ const latexToSolverExpression = (latex) => {
         .replace(/\\sin/g, 'sin')
         .replace(/\\cos/g, 'cos')
         .replace(/\\tan/g, 'tan')
+        .replace(/\\Gamma/g, 'gamma')
         .replace(/\\gamma/g, 'gamma')
         .replace(/\\operatorname\{erf\}/g, 'erf')
         .replace(/e\^\{([^{}]+)\}/g, 'exp($1)')
