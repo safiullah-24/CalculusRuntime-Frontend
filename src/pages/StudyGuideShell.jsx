@@ -361,6 +361,25 @@ function setupSidebar(root) {
   if (!sections.length || !links.length) return () => {};
 
   const sidebar = root.querySelector(".sidebar");
+  const keepActiveLinkVisible = (link) => {
+    if (!sidebar) return;
+    const linkBox = link.getBoundingClientRect();
+    const sidebarBox = sidebar.getBoundingClientRect();
+    const padding = 24;
+
+    if (linkBox.left < sidebarBox.left + padding) {
+      sidebar.scrollTo({
+        left: sidebar.scrollLeft - (sidebarBox.left + padding - linkBox.left),
+        behavior: "smooth",
+      });
+    } else if (linkBox.right > sidebarBox.right - padding) {
+      sidebar.scrollTo({
+        left: sidebar.scrollLeft + (linkBox.right - sidebarBox.right + padding),
+        behavior: "smooth",
+      });
+    }
+  };
+
   const scrollToTarget = (event) => {
     const link = event.currentTarget;
     const hash = link.getAttribute("href");
@@ -381,6 +400,9 @@ function setupSidebar(root) {
 
     window.history.pushState(null, "", hash);
     window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    links.forEach((item) => item.classList.remove("active"));
+    link.classList.add("active");
+    keepActiveLinkVisible(link);
   };
 
   links.forEach((link) => link.addEventListener("click", scrollToTarget));
@@ -399,7 +421,7 @@ function setupSidebar(root) {
         links.forEach((item) => item.classList.remove("active"));
         link.classList.add("active");
         lastActive = link;
-        link.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+        keepActiveLinkVisible(link);
       }
     });
   }, { rootMargin: "-10% 0px -65% 0px", threshold: 0 });
