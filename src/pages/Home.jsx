@@ -31,6 +31,15 @@ const guideCards = [
     icon: "∇",
     color: "blue",
   },
+{
+    title: "Limits & Continuity",
+    description:
+      "Multivariable limits, path-dependence, the squeeze theorem, and continuity for functions of two or more variables.",
+    path: "/limits-continuity/1",
+    meta: "2 parts · MCQ practice · Path analysis",
+    icon: "lim",
+    color: "purple",
+  },
 ];
 
 const toolLinks = [

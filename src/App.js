@@ -10,14 +10,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import AISolver from "./pages/AISolver";
-import SimpleConcepts from "./pages/SimpleConcepts";
-import ConceptExplore from "./pages/ConceptExplore";
 
 // Guide parts
 import PartialPart1 from "./pages/PartialPart1";
 import PartialPart2 from "./pages/PartialPart2";
 import VectorPart1 from "./pages/VectorPart1";
 import VectorPart2 from "./pages/VectorPart2";
+import LimitsPart1 from "./pages/LimitsPart1";
+import LimitsPart2 from "./pages/LimitsPart2";
 
 // Tools
 import ContinuityFinder from "./pages/ContinuityFinder";
@@ -40,18 +40,21 @@ function App() {
 
             {/* AI Solver */}
             <Route path="/ai-solver" element={<Layout body={<AISolver />} />} />
-            <Route path="/simple-concepts" element={<Layout body={<SimpleConcepts />} />} />
-            <Route path="/simple-concepts/:slug" element={<Layout body={<ConceptExplore />} />} />
 
-            {/* Partial Derivatives — split into 2 parts */}
+            {/* Partial Derivatives */}
             <Route path="/partial-derivatives" element={<Navigate to="/partial-derivatives/1" replace />} />
             <Route path="/partial-derivatives/1" element={<Layout body={<PartialPart1 />} />} />
             <Route path="/partial-derivatives/2" element={<Layout body={<PartialPart2 />} />} />
 
-            {/* Vector Calculus — split into 2 parts */}
+            {/* Vector Calculus */}
             <Route path="/vector-calculus" element={<Navigate to="/vector-calculus/1" replace />} />
             <Route path="/vector-calculus/1" element={<Layout body={<VectorPart1 />} />} />
             <Route path="/vector-calculus/2" element={<Layout body={<VectorPart2 />} />} />
+
+            {/* Limits & Continuity */}
+            <Route path="/limits-continuity" element={<Navigate to="/limits-continuity/1" replace />} />
+            <Route path="/limits-continuity/1" element={<Layout body={<LimitsPart1 />} />} />
+            <Route path="/limits-continuity/2" element={<Layout body={<LimitsPart2 />} />} />
 
             {/* Tools */}
             <Route path="/test" element={<Layout body={<ContinuityFinder />} />} />
