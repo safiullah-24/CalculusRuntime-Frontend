@@ -2,7 +2,39 @@ import { create, all } from 'mathjs';
 
 const math = create(all);
 
-export function generateTaylorSeries(expression, center, degree, variable = 'x') {
+function toNumeric(value) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+  if (math.typeOf(value) === 'Complex') {
+    if (!Number.isFinite(value.re) || value.im !== 0) {
+      return null;
+    }
+    return value.re;
+  }
+  if (math.typeOf(value) === 'BigNumber') {
+    const numberResult = value.toNumber();
+    return Number.isFinite(numberResult) ? numberResult : null;
+  }
+  return null;
+}
+
+function coefficientToString(coeffExpr, scope, variable, center) {
+  const evaluated = math.evaluate(coeffExpr, { ...scope, [variable]: center });
+  const numeric = toNumeric(evaluated);
+
+  if (numeric !== null) {
+    return String(numeric);
+  }
+
+  if (math.typeOf(evaluated) === 'Object' && typeof evaluated.toString === 'function') {
+    return evaluated.toString();
+  }
+
+  return String(evaluated);
+}
+
+export function generateTaylorSeries(expression, center, degree, variable = 'x', scope = {}) {
   const a = Number(center);
   if (!Number.isFinite(a)) {
     throw new Error('Center point must be a finite number.');
@@ -13,36 +45,24 @@ export function generateTaylorSeries(expression, center, degree, variable = 'x')
   }
 
   let current = math.parse(expression);
-  let seriesExpression = '0';
+  const terms = [];
 
   for (let k = 0; k <= degree; k += 1) {
-    const value = current.evaluate({ [variable]: a });
-    let numericValue = value;
+    const coeffExpr = math.simplify(current).toString();
+    const coeffStr = coefficientToString(coeffExpr, scope, variable, a);
 
-    if (math.typeOf(value) === 'Complex') {
-      if (!Number.isFinite(value.re) || value.im !== 0) {
-        throw new Error(`Function or derivative is undefined at x = ${a}.`);
-      }
-      numericValue = value.re;
+    if (!coeffStr || coeffStr === 'null' || coeffStr === 'undefined') {
+      throw new Error(`Function or derivative is undefined at ${variable} = ${a}.`);
     }
 
-    if (math.typeOf(value) === 'BigNumber') {
-      numericValue = value.toNumber();
-    }
-
-    numericValue = Number(numericValue);
-    if (!Number.isFinite(numericValue)) {
-      throw new Error(`Function or derivative is undefined at x = ${a}.`);
-    }
-
-    const coefficient = numericValue / math.factorial(k);
+    const factorialK = math.factorial(k);
     const term = k === 0
-      ? `${coefficient}`
-      : `${coefficient} * (${variable} - (${a}))^${k}`;
+      ? `(${coeffStr}) / (${factorialK})`
+      : `(${coeffStr}) / (${factorialK}) * (${variable} - (${a}))^${k}`;
 
-    seriesExpression = `${seriesExpression} + (${term})`;
+    terms.push(term);
     current = math.derivative(current, variable);
   }
 
-  return math.simplify(math.parse(seriesExpression)).toString();
+  return math.simplify(math.parse(terms.join(' + '))).toString();
 }

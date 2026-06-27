@@ -13,7 +13,7 @@
     "plotly.js-dist-min": "^2.35.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.13.0",
+    "react-router-dom": "^6.30.2",
     "react-scripts": "5.0.1",
     "slangmath": "^1.0.0",
     "tex-math-parser": "^2.0.5",
@@ -24,6 +24,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^katex$": "<rootDir>/node_modules/katex/dist/katex.js",
+      "^katex/contrib/auto-render$": "<rootDir>/src/test-utils/katexAutoRenderMock.js",
+      "^crosstex$": "<rootDir>/src/test-utils/crosstexMock.js"
+    }
   },
   "eslintConfig": {
     "extends": [
